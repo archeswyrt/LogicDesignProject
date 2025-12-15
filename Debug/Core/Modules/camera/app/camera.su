@@ -1,0 +1,5 @@
+camera.c:97:9:Camera_Prep	8	static
+camera.c:105:9:Camera_Start_Cap	8	static
+camera.c:120:9:Camera_Stop_Cap	8	static
+camera.c:125:6:Frame_Ready_Callback	8	static
+camera.c:149:6:Send_Buffer	16	static

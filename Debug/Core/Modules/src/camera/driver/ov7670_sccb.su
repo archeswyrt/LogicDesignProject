@@ -1,0 +1,2 @@
+ov7670_sccb.c:11:9:OV7670_Reg_Write	40	static
+ov7670_sccb.c:23:9:OV7670_Reg_Read	32	static
