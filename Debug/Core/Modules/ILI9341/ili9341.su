@@ -6,7 +6,8 @@ ili9341.c:150:6:lcd_ILI_draw_char	32	static
 ili9341.c:169:6:lcd_ILI_draw_string	48	static
 ili9341.c:192:6:lcd_ILI_display_frame	32	static
 ili9341.c:212:11:lcd_ILI_get_draw_addr	8	static
-ili9341.c:218:6:lcd_ILI_get_subframe	48	static
-ili9341.c:262:20:write_cmd	16	static
-ili9341.c:267:20:write_data	16	static
-ili9341.c:272:24:read_data	16	static
+ili9341.c:218:6:lcd_ILI_get_subframe_RGB565	48	static
+ili9341.c:260:6:lcd_ILI_get_subframe_GreyScale	56	static
+ili9341.c:307:20:write_cmd	16	static
+ili9341.c:312:20:write_data	16	static
+ili9341.c:317:24:read_data	16	static

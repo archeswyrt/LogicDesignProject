@@ -1,84 +1,23 @@
 /*
- * sensor.c
+ * hc_sr04.c
  *
- *  Created on: Nov 29, 2025
- *      Author: DELL
+ *  Created on: Dec 15, 2025
+ *      Author: Nam Truong
  */
 
-#include "sensor.h"
 
-//extern TIM_HandleTypeDef htim1;
+
+#include "sensor/hc_sr04.h"
+
 extern TIM_HandleTypeDef htim8;
 
-//uint32_t IC_Val1 = 0;
-//uint32_t IC_Val2 = 0;
-//uint32_t Difference = 0;
-//uint8_t Is_First_Captured = 0;  // is the first value captured ?
-////uint8_t Distance  = 0;
-//float Distance  = 0;
-//
-//#define TRIG_PIN GPIO_PIN_7
-//#define TRIG_PORT GPIOE
-//
-//
-//void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
-//{
-//	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)  // if the interrupt source is channel1
-//	{
-//		if (Is_First_Captured==0) // if the first value is not captured
-//		{
-//			IC_Val1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1); // read the first value
-//			Is_First_Captured = 1;  // set the first captured as true
-//			// Now change the polarity to falling edge
-//			__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_FALLING);
-//		}
-//		else if (Is_First_Captured==1)   // if the first is already captured
-//		{
-//			IC_Val2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);  // read second value
-//			__HAL_TIM_SET_COUNTER(htim, 0);  // reset the counter
-//
-//			if (IC_Val2 > IC_Val1)
-//			{
-//				Difference = IC_Val2-IC_Val1;
-//			}
-//			else if (IC_Val1 > IC_Val2)
-//			{
-//				Difference = (0xffff - IC_Val1) + IC_Val2;
-//			}
-//			Distance = Difference * .034 / 2;
-//			Is_First_Captured = 0; // set it back to false
-//			// set polarity to rising edge
-//			__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);
-//			__HAL_TIM_DISABLE_IT(&htim1, TIM_IT_CC1);
-//		}
-//	}
-//}
-//
-//void delay(uint16_t time){
-//	__HAL_TIM_SET_COUNTER(&htim1, 0);
-//	while(__HAL_TIM_GET_COUNTER(&htim1) < time);
-//}
-//
-//uint8_t HCSR04_GetDis (void)
-//{
-//	//__HAL_TIM_SET_COUNTER(&htim1, 0);
-//
-//	HAL_GPIO_WritePin(TRIG_PORT, TRIG_PIN, GPIO_PIN_SET);  // pull the TRIG pin HIGH
-//	delay(10);  // wait for 10 us
-//	HAL_GPIO_WritePin(TRIG_PORT, TRIG_PIN, GPIO_PIN_RESET);  // pull the TRIG pin low
-//
-//	__HAL_TIM_ENABLE_IT(&htim1, TIM_IT_CC1);
-//	//HAL_Delay(60);
-//	return Distance;
-//}
+static object_state_t obj_state = OBJECT_ABSENT;
+static object_state_t last_obj_state = OBJECT_ABSENT;
 
-Sensor_t sensors[4] =
-{
-    //{GPIOE, GPIO_PIN_7,  &htim1, TIM_CHANNEL_1},
+static uint8_t last_distance = 0;
+
+Sensor_t sensors[N_sensors] = {
 	{GPIOA, GPIO_PIN_1,  &htim8, TIM_CHANNEL_1}
-//    {GPIOE, GPIO_PIN_8,  &htim1, TIM_CHANNEL_2},
-//    {GPIOE, GPIO_PIN_10, &htim1, TIM_CHANNEL_3},
-//    {GPIOE, GPIO_PIN_12, &htim1, TIM_CHANNEL_4}
 };
 
 // ======================= CALLBACK ===========================
@@ -97,7 +36,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
     }
 
     // 2) Tìm sensor tương ứng
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 1; i++)
     {
         Sensor_t *s = &sensors[i];
 
@@ -170,4 +109,45 @@ uint8_t HCSR04_GetDis(uint8_t id)
 
 	__HAL_TIM_ENABLE_IT(s->htim, it);
 	return (uint8_t)s->Distance;
+}
+
+uint8_t fsm_hcsr04_reading()
+{
+    uint8_t dis = HCSR04_GetDis(0);
+
+    last_distance = dis;
+
+    /* Update current object state with hysteresis */
+    if (dis < ENTER_DIST_CM)
+    {
+        obj_state = OBJECT_PRESENT;
+    }
+    else if (dis > EXIT_DIST_CM)
+    {
+        obj_state = OBJECT_ABSENT;
+    }
+    /* else: keep previous state */
+    return dis;
+}
+
+
+int is_object_arrived(void)
+{
+    int arrived = 0;
+
+    if (obj_state == OBJECT_PRESENT &&
+        last_obj_state == OBJECT_ABSENT)
+    {
+        arrived = 1;
+    }
+
+    /* Latch state AFTER checking */
+    last_obj_state = obj_state;
+
+    return arrived;
+}
+
+int is_object_present(void)
+{
+	return (obj_state == OBJECT_PRESENT);
 }

@@ -32,12 +32,12 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/camera/OV7670_config.h \
- D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/camera/OV7670.h \
- D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/ILI9341/ili9341_config.h \
- D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/ILI9341/ili9341.h \
- D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/ILI9341/fonts.h \
- ../Core/Inc/sensor.h
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_config.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341_config.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/fonts.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h
 
 ../Core/Inc/main.h:
 
@@ -107,14 +107,14 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
-D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/camera/OV7670_config.h:
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_config.h:
 
-D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/camera/OV7670.h:
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670.h:
 
-D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/ILI9341/ili9341_config.h:
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341_config.h:
 
-D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/ILI9341/ili9341.h:
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341.h:
 
-D:/HK251/VXL/LAB/tkll/CAMERA_MCU/Core/Modules/ILI9341/fonts.h:
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/fonts.h:
 
-../Core/Inc/sensor.h:
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h:

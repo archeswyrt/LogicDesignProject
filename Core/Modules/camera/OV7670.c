@@ -36,7 +36,7 @@ static uint32_t s_currentH;
 static uint32_t s_currentV;
 
 extern int frame_captured;
-
+extern int cam_busy;
 /*** Internal Function Declarations ***/
 static void ov7670_write(uint8_t regAddr, uint8_t data);
 static void ov7670_read(uint8_t regAddr, uint8_t *data);
@@ -73,12 +73,14 @@ void ov7670_config()
 
 void ov7670_startCap(uint32_t capMode, uint32_t destAddress)
 {
-	//ov7670_stopCap();
-	sp_hdcmi->State = HAL_DCMI_STATE_READY;
-	sp_hdcmi->DMA_Handle->State = HAL_DMA_STATE_READY;
-
-	if (capMode == OV7670_CAP_SINGLE_FRAME) {
-		//s_destAddressForContiuousMode = 0;
+	ov7670_stopCap();
+	if (capMode == OV7670_CAP_CONTINUOUS) {
+		/* note: continuous mode automatically invokes DCMI, but DMA needs to be invoked manually */
+		s_destAddressForContiuousMode = (uint32_t)destAddress;
+		HAL_DCMI_Start_DMA(sp_hdcmi,DCMI_MODE_CONTINUOUS,  destAddress, OV7670_WIDTH * OV7670_HEIGHT / 2);
+	}
+	else if (capMode == OV7670_CAP_SINGLE_FRAME) {
+		s_destAddressForContiuousMode = 0;
 		HAL_DCMI_Start_DMA(sp_hdcmi, DCMI_MODE_SNAPSHOT, destAddress, OV7670_WIDTH * OV7670_HEIGHT / 2);
 	}
 
@@ -86,24 +88,14 @@ void ov7670_startCap(uint32_t capMode, uint32_t destAddress)
 
 void ov7670_stopCap()
 {
-//	HAL_DCMI_Stop(sp_hdcmi);
+	HAL_DCMI_Stop(sp_hdcmi);
 	//  HAL_Delay(30);
-	if (sp_hdcmi->State != HAL_DCMI_STATE_READY)
-	    {
-	        HAL_DCMI_Stop(sp_hdcmi);
-	    }
-
-	    if (sp_hdcmi->DMA_Handle->State != HAL_DMA_STATE_READY)
-	    {
-	        HAL_DMA_Abort(sp_hdcmi->DMA_Handle);
-	    }
-
-	    __HAL_DCMI_DISABLE(sp_hdcmi);
 }
 
 void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
 {
 	frame_captured = 1;
+
 	lcd_ILI_set_write_area(0, 0, LCD_ILI_WIDTH - 1, LCD_ILI_HEIGHT - 1); // set the address of lcd back to starting address
 
 	if(s_destAddressForContiuousMode != 0) {

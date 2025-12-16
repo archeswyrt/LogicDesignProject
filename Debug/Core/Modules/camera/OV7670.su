@@ -1,7 +1,7 @@
 OV7670.c:45:6:ov7670_init	24	static
 OV7670.c:63:6:ov7670_config	16	static
 OV7670.c:74:6:ov7670_startCap	16	static
-OV7670.c:87:6:ov7670_stopCap	8	static
-OV7670.c:104:6:HAL_DCMI_FrameEventCallback	16	static
-OV7670.c:130:13:ov7670_write	32	static
-OV7670.c:142:13:ov7670_read	32	static
+OV7670.c:89:6:ov7670_stopCap	8	static
+OV7670.c:95:6:HAL_DCMI_FrameEventCallback	16	static
+OV7670.c:122:13:ov7670_write	32	static
+OV7670.c:134:13:ov7670_read	32	static

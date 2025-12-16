@@ -31,7 +31,8 @@
 #include "ILI9341/ili9341_config.h"
 #include "ILI9341/ili9341.h"
 #include "ILI9341/fonts.h"
-#include "sensor.h"
+#include "sensor/hc_sr04.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +42,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define FRAME_WIDTH 	160
+#define FRAME_HEIGHT	120
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -55,6 +58,7 @@ DMA_HandleTypeDef hdma_dcmi;
 I2C_HandleTypeDef hi2c2;
 
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim8;
 
 SRAM_HandleTypeDef hsram1;
@@ -72,6 +76,7 @@ static void MX_FSMC_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM8_Init(void);
+static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -79,10 +84,9 @@ static void MX_TIM8_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int frame_captured = 0;
-//__attribute__((section(".sram_dma"), aligned(4)))
- uint16_t fpga_buf[160*120];
-float dis1 = 0;
-uint8_t can_capture = 1;
+int cam_busy = 0;
+
+uint16_t fpga_buf[160*120];
 /* USER CODE END 0 */
 
 /**
@@ -119,8 +123,10 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM2_Init();
   MX_TIM8_Init();
-  HAL_TIM_IC_Start_IT(&htim8, TIM_CHANNEL_1);
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_IC_Start_IT(&htim8, TIM_CHANNEL_1);
+  HAL_TIM_Base_Start_IT(&htim3);
 
   uint16_t* pData;
   HAL_GPIO_WritePin(FSMC_BLK_GPIO_Port, FSMC_BLK_Pin, GPIO_PIN_SET); //LCD Backlight to 3V3
@@ -137,24 +143,6 @@ int main(void)
 	lcd_ILI_display_frame(fpga_buf, 160, 120);
 	HAL_Delay(1000);
 
-//  pData = lcd_ILI_get_draw_addr();
-//  ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
-
-  /*
-
-*/
-
-  /*
-   * if an obj is detected, we use:
-   *
-   * lcd_ILI_setArea(320,240);
-   * start_cap(snapshot, (uint32_t)pData);
-   *
-   * the frameevtcallback sets a flag X for fpga communicating
-   *
-   * an fpga_commnunicating() waits for flag X to:
-   * send_frame_FPGA();
-   */
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -163,34 +151,32 @@ int main(void)
     while (1)
     {
 
-  	  dis1 = HCSR04_GetDis(0);
-  	  HAL_Delay(200);
-  	  if(dis1 < 5 && can_capture){
-  		  pData = lcd_ILI_get_draw_addr();
-  		  ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
-  		HAL_GPIO_TogglePin(HEART_GPIO_Port, HEART_Pin);
+    	if(is_object_arrived() && !cam_busy)
+    	{
+    		HAL_GPIO_WritePin(HEART_GPIO_Port, HEART_Pin, 1);
 
-  		can_capture = 0;
-  	  }
+    		cam_busy = 1;
+    		lcd_ILI_draw_string(200, 10, "Object Detected!", COLOR_WHITE, COLOR_BLACK);
+    		pData = lcd_ILI_get_draw_addr();
+    		ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
+    	}
 
-  	  if(frame_captured)
-  	  	  {
 
-  	  		    		ov7670_stopCap();
-  	  		    		HAL_Delay(5);
-  	  		    		//memset(fpga_buf, 0, sizeof(fpga_buf)); // optional before reading
+    	if(frame_captured)
+    	{
+    		// display back to lcd for debugging //
+    		lcd_ILI_get_subframe_RGB565(fpga_buf, FRAME_WIDTH, FRAME_HEIGHT);
+    		lcd_ILI_display_frame(fpga_buf, FRAME_WIDTH, FRAME_HEIGHT);
 
-  	  		    		lcd_ILI_get_subframe(fpga_buf, 160, 120);
+    		frame_captured = 0;
+    		cam_busy = 0;
+    	}
 
-  	  		    		lcd_ILI_display_frame(fpga_buf, 160, 120);
+    	if(!is_object_present())
+    	{
+    		HAL_GPIO_WritePin(HEART_GPIO_Port, HEART_Pin, 0);
 
-  	  		    		frame_captured = 0;
-  	  	  }
-
-  	if (dis1 >= 5)
-  	{
-  	    can_capture = 1;
-  	}
+    	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -352,6 +338,51 @@ static void MX_TIM2_Init(void)
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 16799;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 99;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
 
 }
 
@@ -560,14 +591,15 @@ static void MX_FSMC_Init(void)
 
 /* USER CODE BEGIN 4 */
 static int count = 0;
+float dis = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if (htim->Instance == TIM2){
+    if (htim->Instance == TIM3){
     	count++;
-    	if(count >= 100)
+    	if(count >= 10)
     	{
-    		HAL_GPIO_TogglePin(HEART_GPIO_Port, HEART_Pin);
-    		count = 0;
+        	dis = fsm_hcsr04_reading();
+        	count = 0;
     	}
     }
 

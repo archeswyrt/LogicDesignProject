@@ -36,7 +36,7 @@ void lcd_ILI_init()
 	write_data(0xC2);
 
 	write_cmd(0x36);   // memory access control
-	write_data(0x68);     // BGR -> seems RGB
+	write_data(0x48);     // BGR -> seems RGB
 	//  write_data(0x60);     // RGB -> seems BGR
 
 	write_cmd(0x3A); // pixel format
@@ -215,7 +215,7 @@ uint16_t* lcd_ILI_get_draw_addr()
 	return (uint16_t*)LCD_DATA_ADDR;
 }
 
-void lcd_ILI_get_subframe(uint16_t *buf, uint16_t w, uint16_t h)
+void lcd_ILI_get_subframe_RGB565(uint16_t *buf, uint16_t w, uint16_t h)
 {
     uint16_t x0 = (LCD_ILI_WIDTH  - w) / 2;
     uint16_t y0 = (LCD_ILI_HEIGHT - h) / 2;
@@ -224,11 +224,12 @@ void lcd_ILI_get_subframe(uint16_t *buf, uint16_t w, uint16_t h)
 
         lcd_ILI_set_read_area(
             x0, y0,
-             x0 + w - 1, y0 + h - 1
+            x0 + w - 1,
+			y0 + h - 1
         );
 
 
-        for (uint16_t i = 0; i < w*h; i++)
+        for (uint16_t i = 0; i < w*h/2; i++)
         {
             /* RGB666 read (3 reads per pixel) */
             uint16_t d0 = read_data();
@@ -256,6 +257,50 @@ void lcd_ILI_get_subframe(uint16_t *buf, uint16_t w, uint16_t h)
         }
 }
 
+void lcd_ILI_get_subframe_GreyScale(uint8_t *buf, uint16_t w, uint16_t h)
+{
+	uint16_t x0 = (LCD_ILI_WIDTH  - w) / 2;
+	uint16_t y0 = (LCD_ILI_HEIGHT - h) / 2;
+
+	uint32_t idx = 0;
+
+	lcd_ILI_set_read_area(
+		x0, y0,
+		x0 + w - 1,
+		y0 + h - 1
+	);
+
+	for (uint32_t i = 0; i < (w * h) / 2; i++)
+	{
+		uint16_t d0 = read_data();
+		uint16_t d1 = read_data();
+		uint16_t d2 = read_data();
+
+		// unpack RGB666 → RGB888 (2 pixels)
+		uint8_t r1 = d0 >> 8;
+		uint8_t g1 = d0 & 0xFF;
+		uint8_t b1 = d1 >> 8;
+
+		uint8_t r2 = d1 & 0xFF;
+		uint8_t g2 = d2 >> 8;
+		uint8_t b2 = d2 & 0xFF;
+
+		// luminance
+		uint8_t pix1 = (77*r1 + 150*g1 + 29*b1) >> 8;
+		uint8_t pix2 = (77*r2 + 150*g2 + 29*b2) >> 8;
+
+		// pack back to RGB565 (R=G=B=Y)
+		buf[idx++] =
+			((pix1 & 0xF8) << 8) |
+			((pix1 & 0xFC) << 3) |
+			(pix1 >> 3);
+
+		buf[idx++] =
+			((pix2 & 0xF8) << 8) |
+			((pix2 & 0xFC) << 3) |
+			(pix2 >> 3);
+	}
+}
 
 
 /*** Internal Function Defines ***/
