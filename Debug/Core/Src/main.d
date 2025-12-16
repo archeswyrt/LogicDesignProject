@@ -1,5 +1,8 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+Core/Src/main.o: ../Core/Src/main.c \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/fonts.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341_config.h \
+ ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
@@ -34,10 +37,13 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_config.h \
  D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341_config.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/fonts.h \
  D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h
+
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/fonts.h:
+
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341.h:
+
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341_config.h:
 
 ../Core/Inc/main.h:
 
@@ -110,11 +116,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_config.h:
 
 D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670.h:
-
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341_config.h:
-
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/ili9341.h:
-
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/ILI9341/fonts.h:
 
 D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h:

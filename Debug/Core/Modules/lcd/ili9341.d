@@ -1,4 +1,7 @@
-Core/Modules/ILI9341/ili9341.o: ../Core/Modules/ILI9341/ili9341.c \
+Core/Modules/lcd/ili9341.o: ../Core/Modules/lcd/ili9341.c \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/fonts.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341.h \
+ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341_config.h \
  ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -31,9 +34,13 @@ Core/Modules/ILI9341/ili9341.o: ../Core/Modules/ILI9341/ili9341.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Modules/ILI9341/ili9341_config.h \
- ../Core/Modules/ILI9341/ili9341.h ../Core/Modules/ILI9341/fonts.h
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/fonts.h:
+
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341.h:
+
+D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341_config.h:
 
 ../Core/Inc/main.h:
 
@@ -102,9 +109,3 @@ Core/Modules/ILI9341/ili9341.o: ../Core/Modules/ILI9341/ili9341.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
-
-../Core/Modules/ILI9341/ili9341_config.h:
-
-../Core/Modules/ILI9341/ili9341.h:
-
-../Core/Modules/ILI9341/fonts.h:

@@ -5,15 +5,16 @@
  *      Author: Nam Truong
  */
 
-
 #include <stdio.h>
 #include "main.h"
 #include "stm32f4xx_hal.h"
+
+#include "lcd/ili9341.h"
+#include "lcd/ili9341_config.h"
+
 #include "camera/OV7670.h"
 #include "camera/OV7670_config.h"
 #include "camera/OV7670_reg.h"
-#include "ILI9341/ili9341_config.h"
-#include "ILI9341/ili9341.h"
 
 /*** Internal Const Values, Macros ***/
 #ifdef QVGA
@@ -104,20 +105,7 @@ void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
 	s_currentV++;
 	s_currentH = 0;
 }
-/*
-void HAL_DCMI_LineEventCallback(DCMI_HandleTypeDef *hdcmi)
-{
-    static uint16_t row = 0;
-    if(row >= 60 && row < 180) {
-        uint16_t *dst = &fpga_buf[(row-60)*160];
-        uint16_t *src = (uint16_t*)LCD_DATA_ADDR + 80;
-        for(int i = 0; i < 160; i++)
-            dst[i] = src[i];
-    }
-    row++;
-    if(row == 240) row = 0;
-}
-*/
+
 /* internal functions */
 static void ov7670_write(uint8_t reg, uint8_t val)
 {

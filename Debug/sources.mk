@@ -20,9 +20,9 @@ OBJCOPY_BIN :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Core/Modules/ILI9341 \
 Core/Modules/camera \
 Core/Modules/fpga_communication \
+Core/Modules/lcd \
 Core/Modules/sensor \
 Core/Src \
 Core/Startup \

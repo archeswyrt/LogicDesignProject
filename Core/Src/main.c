@@ -18,6 +18,9 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include "lcd/fonts.h"
+#include "lcd/ili9341.h"
+#include "lcd/ili9341_config.h"
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -28,9 +31,6 @@
 
 #include "camera/OV7670_config.h"
 #include "camera/OV7670.h"
-#include "ILI9341/ili9341_config.h"
-#include "ILI9341/ili9341.h"
-#include "ILI9341/fonts.h"
 #include "sensor/hc_sr04.h"
 
 /* USER CODE END Includes */
@@ -129,19 +129,13 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim3);
 
   uint16_t* pData;
-  HAL_GPIO_WritePin(FSMC_BLK_GPIO_Port, FSMC_BLK_Pin, GPIO_PIN_SET); //LCD Backlight to 3V3
   lcd_ILI_init();
-  lcd_ILI_draw_rect(0, 0, LCD_ILI_WIDTH, LCD_ILI_HEIGHT, COLOR_RED);
   HAL_Delay(1000);
   ov7670_init(&hdcmi, &hdma_dcmi, &hi2c2);
   ov7670_config();
 
-  for(int i = 0; i<160*120; i++)
-  {
-	  fpga_buf[i] = COLOR_YELLOW;
-  }
-	lcd_ILI_display_frame(fpga_buf, 160, 120);
-	HAL_Delay(1000);
+  lcd_ILI_draw_rect(0, 0, LCD_ILI_WIDTH, LCD_ILI_HEIGHT, COLOR_RED);
+  HAL_Delay(1000);
 
   /* USER CODE END 2 */
 
@@ -153,10 +147,8 @@ int main(void)
 
     	if(is_object_arrived() && !cam_busy)
     	{
-    		HAL_GPIO_WritePin(HEART_GPIO_Port, HEART_Pin, 1);
 
     		cam_busy = 1;
-    		lcd_ILI_draw_string(200, 10, "Object Detected!", COLOR_WHITE, COLOR_BLACK);
     		pData = lcd_ILI_get_draw_addr();
     		ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
     	}
@@ -172,11 +164,8 @@ int main(void)
     		cam_busy = 0;
     	}
 
-    	if(!is_object_present())
-    	{
-    		HAL_GPIO_WritePin(HEART_GPIO_Port, HEART_Pin, 0);
+    	if(is_object_present()) HAL_GPIO_TogglePin(HEART_GPIO_Port, HEART_Pin);
 
-    	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

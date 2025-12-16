@@ -4,24 +4,24 @@
  *  Created on: Dec 4, 2025
  *      Author: Nam Truong
  */
+#include "lcd/fonts.h"
+#include "lcd/ili9341.h"
+#include "lcd/ili9341_config.h"
 #include <stdio.h>
 #include "main.h"
 #include "stm32f4xx_hal.h"
-#include "ili9341_config.h"
-#include "ili9341.h"
-#include "fonts.h"
 
 
 /*** Internal Function Declarations ***/
 static void write_data(uint16_t data);
 static void write_cmd(uint16_t cmd);
 static uint16_t read_data();
-static uint16_t rgb565_swap_rb(uint16_t c);
 
 /*** External Function Defines ***/
 void lcd_ILI_init()
 {
 
+	HAL_GPIO_WritePin(FSMC_BLK_GPIO_Port, FSMC_BLK_Pin, GPIO_PIN_SET);HAL_Delay(10);
 	HAL_GPIO_WritePin(FSMC_RES_GPIO_Port, FSMC_RES_Pin, GPIO_PIN_SET);HAL_Delay(10);
 	HAL_GPIO_WritePin(FSMC_RES_GPIO_Port, FSMC_RES_Pin, GPIO_PIN_RESET);HAL_Delay(10);
 	HAL_GPIO_WritePin(FSMC_RES_GPIO_Port, FSMC_RES_Pin, GPIO_PIN_SET);HAL_Delay(10);
@@ -36,7 +36,7 @@ void lcd_ILI_init()
 	write_data(0xC2);
 
 	write_cmd(0x36);   // memory access control
-	write_data(0x48);     // BGR -> seems RGB
+	write_data(0xc8);
 	//  write_data(0x60);     // RGB -> seems BGR
 
 	write_cmd(0x3A); // pixel format
@@ -147,25 +147,29 @@ void lcd_ILI_draw_rect(uint16_t xStart, uint16_t yStart, uint16_t width, uint16_
 }
 
 /* string displaying */
+/* Draw a single 8x8 character (optimized) */
 void lcd_ILI_draw_char(uint16_t x, uint16_t y, char c, uint16_t color, uint16_t bg)
 {
     if(c < 32 || c > 127) return; // only printable
     c -= 32; // index into font array
 
+    // Set the write area for the full 8x8 block
+    lcd_ILI_set_write_area(x, y, x + 7, y + 7);
+
+    // Write pixels sequentially row by row
     for(uint8_t row = 0; row < 8; row++)
     {
-    	unsigned char uc = (unsigned char)c;
-    	uint8_t bits = font8x8_basic[uc][row];
+        uint8_t bits = font8x8_basic[(uint8_t)c][row];
 
         for(uint8_t col = 0; col < 8; col++)
         {
             uint16_t pixel_color = (bits & (1 << (7 - col))) ? color : bg;
-            lcd_ILI_set_write_area(x + col, y + row, x + col, y + row);
             LCD_DATA = pixel_color;
         }
     }
 }
 
+/* Draw a string of characters */
 void lcd_ILI_draw_string(uint16_t x, uint16_t y, const char *str, uint16_t color, uint16_t bg)
 {
     uint16_t cursor_x = x;
@@ -180,12 +184,20 @@ void lcd_ILI_draw_string(uint16_t x, uint16_t y, const char *str, uint16_t color
         }
         else
         {
+            // Wrap line if needed
+            if(cursor_x + 8 > LCD_ILI_WIDTH)
+            {
+                cursor_x = x;
+                cursor_y += 8;
+            }
+
             lcd_ILI_draw_char(cursor_x, cursor_y, *str, color, bg);
-            cursor_x += 8; // next character
+            cursor_x += 8; // move to next character
         }
         str++;
     }
 }
+
 
 
 /* frame display at the center of lcd */
@@ -320,12 +332,5 @@ inline static uint16_t read_data()
 	return data;
 }
 
-inline static uint16_t rgb565_swap_rb(uint16_t c)
-{
-    uint16_t r = (c >> 11) & 0x1F;
-    uint16_t g = (c >> 5)  & 0x3F;
-    uint16_t b =  c        & 0x1F;
 
-    return (b << 11) | (g << 5) | r;
-}
 

@@ -5,8 +5,8 @@
  *      Author: Nam Truong
  */
 
-#ifndef MODULES_ILI9341_ILI9341_CONFIG_H_
-#define MODULES_ILI9341_ILI9341_CONFIG_H_
+#ifndef MODULES_LCD_ILI9341_CONFIG_H_
+#define MODULES_LCD_ILI9341_CONFIG_H_
 
 
 #define BIT_WIDTH_16
@@ -38,4 +38,4 @@
 #define LCD_DATA      (*((volatile uint16_t*) LCD_DATA_ADDR))
 
 
-#endif /* MODULES_ILI9341_ILI9341_CONFIG_H_ */
+#endif /* MODULES_LCD_ILI9341_CONFIG_H_ */

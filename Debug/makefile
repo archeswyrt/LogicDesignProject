@@ -13,9 +13,9 @@ RM := rm -rf
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include Core/Modules/sensor/subdir.mk
+-include Core/Modules/lcd/subdir.mk
 -include Core/Modules/fpga_communication/subdir.mk
 -include Core/Modules/camera/subdir.mk
--include Core/Modules/ILI9341/subdir.mk
 -include subdir.mk
 -include objects.mk
 

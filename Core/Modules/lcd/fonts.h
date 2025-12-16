@@ -5,8 +5,8 @@
  *      Author: Nam Truong
  */
 
-#ifndef MODULES_ILI9341_FONTS_H_
-#define MODULES_ILI9341_FONTS_H_
+#ifndef MODULES_LCD_FONTS_H_
+#define MODULES_LCD_FONTS_H_
 
 #include <stdint.h>
 
@@ -23,4 +23,4 @@
 
 extern const uint8_t font8x8_basic[96][8];
 
-#endif /* MODULES_ILI9341_FONTS_H_ */
+#endif /* MODULES_LCD_FONTS_H_ */
