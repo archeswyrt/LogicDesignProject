@@ -58,16 +58,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define FSMC_BLK_Pin GPIO_PIN_6
-#define FSMC_BLK_GPIO_Port GPIOE
-#define FSMC_RES_Pin GPIO_PIN_13
-#define FSMC_RES_GPIO_Port GPIOC
-#define LCD_RST_Pin GPIO_PIN_0
-#define LCD_RST_GPIO_Port GPIOB
-#define LCD_BL_Pin GPIO_PIN_1
-#define LCD_BL_GPIO_Port GPIOB
+#define FSMC_BLK_Pin GPIO_PIN_0
+#define FSMC_BLK_GPIO_Port GPIOB
+#define FSMC_RES_Pin GPIO_PIN_1
+#define FSMC_RES_GPIO_Port GPIOB
 #define CAMERA_RESET_Pin GPIO_PIN_11
 #define CAMERA_RESET_GPIO_Port GPIOD
+#define HCSR_TRIG_Pin GPIO_PIN_10
+#define HCSR_TRIG_GPIO_Port GPIOA
 #define HEART_Pin GPIO_PIN_1
 #define HEART_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */

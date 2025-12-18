@@ -18,9 +18,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "lcd/fonts.h"
-#include "lcd/ili9341.h"
-#include "lcd/ili9341_config.h"
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -31,6 +28,11 @@
 
 #include "camera/OV7670_config.h"
 #include "camera/OV7670.h"
+
+#include "lcd/ili9341_config.h"
+#include "lcd/fonts.h"
+#include "lcd/ili9341.h"
+
 #include "sensor/hc_sr04.h"
 
 /* USER CODE END Includes */
@@ -86,7 +88,7 @@ static void MX_TIM3_Init(void);
 int frame_captured = 0;
 int cam_busy = 0;
 
-uint16_t fpga_buf[160*120];
+uint8_t buf[160*120];
 /* USER CODE END 0 */
 
 /**
@@ -118,6 +120,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
+
   MX_DCMI_Init();
   MX_FSMC_Init();
   MX_I2C2_Init();
@@ -144,28 +147,31 @@ int main(void)
 
     while (1)
     {
-
     	if(is_object_arrived() && !cam_busy)
-    	{
+		{
+			cam_busy = 1;
+			pData = lcd_ILI_get_draw_addr();
+			ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
+		}
 
-    		cam_busy = 1;
-    		pData = lcd_ILI_get_draw_addr();
-    		ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
-    	}
 
 
-    	if(frame_captured)
-    	{
-    		// display back to lcd for debugging //
-    		lcd_ILI_get_subframe_RGB565(fpga_buf, FRAME_WIDTH, FRAME_HEIGHT);
-    		lcd_ILI_display_frame(fpga_buf, FRAME_WIDTH, FRAME_HEIGHT);
+		if(frame_captured)
+		{
+			// RGB DEBUGGING VERSION //
+//			lcd_ILI_get_subframe_RGB565(buf, FRAME_WIDTH, FRAME_HEIGHT);
+//			lcd_ILI_display_frame_RGB565(buf, FRAME_WIDTH, FRAME_HEIGHT);
 
-    		frame_captured = 0;
-    		cam_busy = 0;
-    	}
+			// GREYSCALE -> FPGA VERSION //
+			lcd_ILI_get_subframe_Grey(buf, FRAME_WIDTH, FRAME_HEIGHT);
+			lcd_ILI_display_frame_Grey(buf, FRAME_WIDTH, FRAME_HEIGHT);
 
-    	if(is_object_present()) HAL_GPIO_TogglePin(HEART_GPIO_Port, HEART_Pin);
 
+//			FPGA_Send_Image(fpga_buf, FRAME_WIDTH, FRAME_HEIGHT);
+
+			frame_captured = 0;
+			cam_busy = 0;
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -450,62 +456,38 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, FSMC_BLK_Pin|HEART_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FSMC_BLK_Pin|FSMC_RES_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(FSMC_RES_GPIO_Port, FSMC_RES_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(CAMERA_RESET_GPIO_Port, CAMERA_RESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(HCSR_TRIG_GPIO_Port, HCSR_TRIG_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LCD_RST_Pin|LCD_BL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(HEART_GPIO_Port, HEART_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, CAMERA_RESET_Pin|GPIO_PIN_12, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : FSMC_BLK_Pin HEART_Pin */
-  GPIO_InitStruct.Pin = FSMC_BLK_Pin|HEART_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : FSMC_RES_Pin */
-  GPIO_InitStruct.Pin = FSMC_RES_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(FSMC_RES_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : LCD_RST_Pin LCD_BL_Pin */
-  GPIO_InitStruct.Pin = LCD_RST_Pin|LCD_BL_Pin;
+  /*Configure GPIO pins : FSMC_BLK_Pin FSMC_RES_Pin */
+  GPIO_InitStruct.Pin = FSMC_BLK_Pin|FSMC_RES_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : CAMERA_RESET_Pin PD12 */
-  GPIO_InitStruct.Pin = CAMERA_RESET_Pin|GPIO_PIN_12;
+  /*Configure GPIO pin : CAMERA_RESET_Pin */
+  GPIO_InitStruct.Pin = CAMERA_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  HAL_GPIO_Init(CAMERA_RESET_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA8 */
   GPIO_InitStruct.Pin = GPIO_PIN_8;
@@ -514,6 +496,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF0_MCO;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : HCSR_TRIG_Pin */
+  GPIO_InitStruct.Pin = HCSR_TRIG_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(HCSR_TRIG_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : HEART_Pin */
+  GPIO_InitStruct.Pin = HEART_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(HEART_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -585,7 +581,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM3){
     	count++;
-    	if(count >= 10)
+    	if(count >= 5)
     	{
         	dis = fsm_hcsr04_reading();
         	count = 0;

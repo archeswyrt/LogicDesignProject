@@ -17,6 +17,8 @@ static void write_data(uint16_t data);
 static void write_cmd(uint16_t cmd);
 static uint16_t read_data();
 
+static uint16_t  grey_to_rgb565(uint8_t gray);
+
 /*** External Function Defines ***/
 void lcd_ILI_init()
 {
@@ -198,35 +200,15 @@ void lcd_ILI_draw_string(uint16_t x, uint16_t y, const char *str, uint16_t color
     }
 }
 
-
-
-/* frame display at the center of lcd */
-void lcd_ILI_display_frame(uint16_t *buf, uint16_t buf_width, uint16_t buf_height)
-{
-    // Center the frame on the LCD
-    uint16_t xStart = (LCD_ILI_WIDTH - buf_width) / 2;
-    uint16_t yStart = (LCD_ILI_HEIGHT - buf_height) / 2;
-    uint16_t xEnd   = xStart + buf_width - 1;
-    uint16_t yEnd   = yStart + buf_height - 1;
-
-    // Set write window
-    lcd_ILI_set_write_area(xStart, yStart, xEnd, yEnd);
-
-    // Copy the buffer to LCD GRAM
-    for (uint32_t i = 0; i < buf_width * buf_height; i++)
-    {
-        LCD_DATA = buf[i];
-    }
-}
-
-
-// fpga comm side
 uint16_t* lcd_ILI_get_draw_addr()
 {
 	lcd_ILI_set_write_area(0, 0, LCD_ILI_WIDTH - 1, LCD_ILI_HEIGHT - 1);
 	return (uint16_t*)LCD_DATA_ADDR;
 }
 
+
+
+/* get pixel data from lcd */
 void lcd_ILI_get_subframe_RGB565(uint16_t *buf, uint16_t w, uint16_t h)
 {
     uint16_t x0 = (LCD_ILI_WIDTH  - w) / 2;
@@ -269,7 +251,7 @@ void lcd_ILI_get_subframe_RGB565(uint16_t *buf, uint16_t w, uint16_t h)
         }
 }
 
-void lcd_ILI_get_subframe_GreyScale(uint8_t *buf, uint16_t w, uint16_t h)
+void lcd_ILI_get_subframe_Grey(uint8_t *grey_buf, uint16_t w, uint16_t h)
 {
 	uint16_t x0 = (LCD_ILI_WIDTH  - w) / 2;
 	uint16_t y0 = (LCD_ILI_HEIGHT - h) / 2;
@@ -302,18 +284,93 @@ void lcd_ILI_get_subframe_GreyScale(uint8_t *buf, uint16_t w, uint16_t h)
 		uint8_t pix2 = (77*r2 + 150*g2 + 29*b2) >> 8;
 
 		// pack back to RGB565 (R=G=B=Y)
-		buf[idx++] =
-			((pix1 & 0xF8) << 8) |
-			((pix1 & 0xFC) << 3) |
-			(pix1 >> 3);
-
-		buf[idx++] =
-			((pix2 & 0xF8) << 8) |
-			((pix2 & 0xFC) << 3) |
-			(pix2 >> 3);
+		grey_buf[idx++] = pix1;
+		grey_buf[idx++] = pix2;
 	}
 }
 
+
+void lcd_ILI_display_frame_RGB565(uint16_t *buf, uint16_t buf_width, uint16_t buf_height)
+{
+    // Center the frame on the LCD
+    uint16_t xStart = (LCD_ILI_WIDTH - buf_width) / 2;
+    uint16_t yStart = (LCD_ILI_HEIGHT - buf_height) / 2;
+
+    // Display each line separately
+    for (uint16_t y = 0; y < buf_height; y++)
+    {
+        // Set write area for this line only
+        lcd_ILI_set_write_area(xStart, yStart + y, xStart + buf_width - 1, yStart + y);
+
+        // Copy this line's pixels
+        for (uint16_t x = 0; x < buf_width; x++)
+        {
+            LCD_DATA = buf[y * buf_width + x];
+            __NOP();
+        }
+    }
+}
+
+
+void lcd_ILI_display_frame_Grey(uint8_t *grey_buf, uint16_t buf_width, uint16_t buf_height)
+{
+    // Center the frame on the LCD
+    uint16_t xStart = (LCD_ILI_WIDTH  - buf_width) / 2;
+    uint16_t yStart = (LCD_ILI_HEIGHT - buf_height) / 2;
+
+    // Display each line separately
+    for (uint16_t y = 0; y < buf_height; y++)
+    {
+        // Set write area for this line only
+        lcd_ILI_set_write_area(xStart, yStart + y, xStart + buf_width - 1, yStart + y);
+
+        // Write pixels for this line
+        for (uint16_t x = 0; x < buf_width; x++)
+        {
+            uint8_t grey_pix = grey_buf[y * buf_width + x];
+
+            // Convert grayscale to RGB565
+            uint16_t rgb = ((grey_pix & 0xF8) << 8) |
+                           ((grey_pix & 0xFC) << 3) |
+                           (grey_pix >> 3);
+
+            LCD_DATA = rgb;
+
+            // Optional: tiny delay to stabilize FSMC / LCD
+            // __NOP();
+        }
+    }
+}
+
+
+//extra
+void lcd_ILI_display_frame_RGB565_from_u32(
+    uint32_t *buf,
+    uint16_t buf_width,
+    uint16_t buf_height
+)
+{
+    uint16_t xStart = (LCD_ILI_WIDTH  - buf_width)  / 2;
+    uint16_t yStart = (LCD_ILI_HEIGHT - buf_height) / 2;
+    uint16_t xEnd   = xStart + buf_width  - 1;
+    uint16_t yEnd   = yStart + buf_height - 1;
+
+    lcd_ILI_set_write_area(xStart, yStart, xEnd, yEnd);
+
+    uint32_t total_pixels = buf_width * buf_height;
+    uint32_t total_words  = total_pixels >> 1;   // 2 pixel / word
+
+    for (uint32_t i = 0; i < total_words; i++)
+    {
+        uint32_t w = buf[i];
+
+        uint16_t pix0 = (uint16_t)(w & 0xFFFF);        // pixel thấp
+        uint16_t pix1 = (uint16_t)(w >> 16);           // pixel cao
+
+        LCD_DATA = pix0;
+        LCD_DATA = pix1;
+    }
+}
 
 /*** Internal Function Defines ***/
 inline static void write_cmd(uint16_t cmd)
@@ -330,6 +387,16 @@ inline static uint16_t read_data()
 {
 	uint16_t data = LCD_DATA;
 	return data;
+}
+
+
+inline static uint16_t grey_to_rgb565(uint8_t gray)
+{
+    uint8_t r = gray >> 3;  // 8 bit → 5 bit
+    uint8_t g = gray >> 2;  // 8 bit → 6 bit
+    uint8_t b = gray >> 3;  // 8 bit → 5 bit
+
+    return (r << 11) | (g << 5) | b;
 }
 
 

@@ -32,7 +32,8 @@ Core/Modules/sensor/hc_sr04.o: ../Core/Modules/sensor/hc_sr04.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+ ../Core/Inc/main.h
 
 D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h:
 
@@ -101,3 +102,5 @@ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProje
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
+
+../Core/Inc/main.h:

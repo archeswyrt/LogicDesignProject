@@ -11,12 +11,10 @@
 
 #include "stm32f4xx_hal.h"
 
-#define N_sensors
+#define N_sensors 1
 
 #define ENTER_DIST_CM   5
-#define EXIT_DIST_CM    7   // must be > ENTER_DIST_CM
-
-#define OBJECT_ARRIVED is_object_arrived()
+#define EXIT_DIST_CM    20   // the value must exceed EXIT before recording a new one
 
 typedef struct {
     GPIO_TypeDef *TRIG_Port;
@@ -39,7 +37,7 @@ typedef enum {
 } object_state_t;
 
 
-extern Sensor_t sensors[1];
+extern Sensor_t sensors[N_sensors];
 
 
 uint8_t HCSR04_GetDis(uint8_t id);

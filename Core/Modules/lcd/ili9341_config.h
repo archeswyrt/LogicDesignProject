@@ -10,7 +10,7 @@
 
 
 #define BIT_WIDTH_16
-#define FSMC_Ax               19              // use A19 as RS
+#define FSMC_Ax               17              // use A17 as RS
 #define FSMC_NEx              1               // use subbank 1
 
 #define LCD_ILI_RED    0xf800

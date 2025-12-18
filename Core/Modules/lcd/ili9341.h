@@ -19,7 +19,15 @@ void lcd_ILI_draw_string(uint16_t x, uint16_t y, const char *str, uint16_t color
 void lcd_ILI_display_frame(uint16_t *buf, uint16_t w, uint16_t h);
 
 uint16_t* lcd_ILI_get_draw_addr();
-void lcd_ILI_get_subframe_RGB565(uint16_t *buf, uint16_t w, uint16_t h);
-void lcd_ILI_get_subframe_GreyScale(uint8_t *buf, uint16_t w, uint16_t h);
 
+void lcd_ILI_get_subframe_RGB565(uint16_t *rgb_buf, uint16_t w, uint16_t h);
+void lcd_ILI_get_subframe_Grey(uint8_t *rgb_buf, uint16_t w, uint16_t h);
+void lcd_ILI_display_frame_RGB565(uint16_t *gray_buf, uint16_t w, uint16_t h);
+void lcd_ILI_display_frame_Grey(uint8_t *gray_buf, uint16_t w, uint16_t h);
+
+void lcd_ILI_display_frame_RGB565_from_u32(
+    uint32_t *buf,
+    uint16_t buf_width,
+    uint16_t buf_height
+);
 #endif /* LCDILI9341_LCDILI9341_H_ */

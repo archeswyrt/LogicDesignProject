@@ -8,6 +8,7 @@
 
 
 #include "sensor/hc_sr04.h"
+#include "main.h"
 
 extern TIM_HandleTypeDef htim8;
 
@@ -17,7 +18,7 @@ static object_state_t last_obj_state = OBJECT_ABSENT;
 static uint8_t last_distance = 0;
 
 Sensor_t sensors[N_sensors] = {
-	{GPIOA, GPIO_PIN_1,  &htim8, TIM_CHANNEL_1}
+	{HCSR_TRIG_GPIO_Port, HCSR_TRIG_Pin,  &htim8, TIM_CHANNEL_1}
 };
 
 // ======================= CALLBACK ===========================
