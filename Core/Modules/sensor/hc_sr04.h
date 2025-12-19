@@ -13,7 +13,7 @@
 
 #define N_sensors 1
 
-#define ENTER_DIST_CM   5
+#define ENTER_DIST_CM   7
 #define EXIT_DIST_CM    20   // the value must exceed EXIT before recording a new one
 
 typedef struct {

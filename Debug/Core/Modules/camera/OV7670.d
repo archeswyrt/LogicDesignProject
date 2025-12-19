@@ -30,13 +30,14 @@ Core/Modules/camera/OV7670.o: ../Core/Modules/camera/OV7670.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341_config.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_config.h \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_reg.h
+ ../Core/Modules/camera/OV7670_config.h ../Core/Modules/camera/OV7670.h \
+ ../Core/Modules/lcd/ili9341_config.h ../Core/Modules/lcd/fonts.h \
+ ../Core/Modules/lcd/ili9341.h ../Core/Modules/sensor/hc_sr04.h \
+ ../Core/Modules/fpga_communication/fpga_comm.h \
+ ../Core/Modules/camera/OV7670_reg.h
 
 ../Core/Inc/main.h:
 
@@ -102,16 +103,24 @@ Core/Modules/camera/OV7670.o: ../Core/Modules/camera/OV7670.c \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
+
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341.h:
+../Core/Modules/camera/OV7670_config.h:
 
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/lcd/ili9341_config.h:
+../Core/Modules/camera/OV7670.h:
 
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670.h:
+../Core/Modules/lcd/ili9341_config.h:
 
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_config.h:
+../Core/Modules/lcd/fonts.h:
 
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/camera/OV7670_reg.h:
+../Core/Modules/lcd/ili9341.h:
+
+../Core/Modules/sensor/hc_sr04.h:
+
+../Core/Modules/fpga_communication/fpga_comm.h:
+
+../Core/Modules/camera/OV7670_reg.h:

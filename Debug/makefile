@@ -65,8 +65,8 @@ all: main-build
 main-build: CAMERA_OV7670_F407VE.elf secondary-outputs
 
 # Tool invocations
-CAMERA_OV7670_F407VE.elf: $(OBJS) $(USER_OBJS) D:\HCMUT\HK251\tkll\object_classifier\git\object_classification\LogicDesignProject\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "CAMERA_OV7670_F407VE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\HCMUT\HK251\tkll\object_classifier\git\object_classification\LogicDesignProject\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CAMERA_OV7670_F407VE.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CAMERA_OV7670_F407VE.elf: $(OBJS) $(USER_OBJS) D:\HK251\VXL\LAB\CAMERA_OV7670_F407VE\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "CAMERA_OV7670_F407VE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\HK251\VXL\LAB\CAMERA_OV7670_F407VE\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CAMERA_OV7670_F407VE.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

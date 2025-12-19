@@ -1,5 +1,5 @@
 Core/Modules/sensor/hc_sr04.o: ../Core/Modules/sensor/hc_sr04.c \
- D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h \
+ ../Core/Modules/sensor/hc_sr04.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -31,11 +31,15 @@ Core/Modules/sensor/hc_sr04.o: ../Core/Modules/sensor/hc_sr04.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/main.h
+ ../Core/Inc/main.h ../Core/Modules/camera/OV7670_config.h \
+ ../Core/Modules/camera/OV7670.h ../Core/Modules/lcd/ili9341_config.h \
+ ../Core/Modules/lcd/fonts.h ../Core/Modules/lcd/ili9341.h \
+ ../Core/Modules/fpga_communication/fpga_comm.h
 
-D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProject/Core/Modules/sensor/hc_sr04.h:
+../Core/Modules/sensor/hc_sr04.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 
@@ -99,8 +103,22 @@ D:/HCMUT/HK251/tkll/object_classifier/git/object_classification/LogicDesignProje
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
+
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 ../Core/Inc/main.h:
+
+../Core/Modules/camera/OV7670_config.h:
+
+../Core/Modules/camera/OV7670.h:
+
+../Core/Modules/lcd/ili9341_config.h:
+
+../Core/Modules/lcd/fonts.h:
+
+../Core/Modules/lcd/ili9341.h:
+
+../Core/Modules/fpga_communication/fpga_comm.h:

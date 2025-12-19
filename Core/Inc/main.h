@@ -32,7 +32,19 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
 
+#include "camera/OV7670_config.h"
+#include "camera/OV7670.h"
+
+#include "lcd/ili9341_config.h"
+#include "lcd/fonts.h"
+#include "lcd/ili9341.h"
+
+#include "sensor/hc_sr04.h"
+#include "fpga_communication/fpga_comm.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -58,10 +70,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BTN_TRIGGER_Pin GPIO_PIN_0
+#define BTN_TRIGGER_GPIO_Port GPIOA
 #define FSMC_BLK_Pin GPIO_PIN_0
 #define FSMC_BLK_GPIO_Port GPIOB
 #define FSMC_RES_Pin GPIO_PIN_1
 #define FSMC_RES_GPIO_Port GPIOB
+#define FPGA_SS_Pin GPIO_PIN_12
+#define FPGA_SS_GPIO_Port GPIOB
 #define CAMERA_RESET_Pin GPIO_PIN_11
 #define CAMERA_RESET_GPIO_Port GPIOD
 #define HCSR_TRIG_Pin GPIO_PIN_10

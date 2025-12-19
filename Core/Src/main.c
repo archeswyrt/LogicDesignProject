@@ -22,18 +22,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-
-#include "camera/OV7670_config.h"
-#include "camera/OV7670.h"
-
-#include "lcd/ili9341_config.h"
-#include "lcd/fonts.h"
-#include "lcd/ili9341.h"
-
-#include "sensor/hc_sr04.h"
 
 /* USER CODE END Includes */
 
@@ -59,6 +47,8 @@ DMA_HandleTypeDef hdma_dcmi;
 
 I2C_HandleTypeDef hi2c2;
 
+SPI_HandleTypeDef hspi2;
+
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim8;
@@ -79,6 +69,7 @@ static void MX_I2C2_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM8_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_SPI2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -89,6 +80,7 @@ int frame_captured = 0;
 int cam_busy = 0;
 
 uint8_t buf[160*120];
+
 /* USER CODE END 0 */
 
 /**
@@ -120,13 +112,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-
   MX_DCMI_Init();
   MX_FSMC_Init();
   MX_I2C2_Init();
   MX_TIM2_Init();
   MX_TIM8_Init();
   MX_TIM3_Init();
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_IC_Start_IT(&htim8, TIM_CHANNEL_1);
   HAL_TIM_Base_Start_IT(&htim3);
@@ -147,8 +139,12 @@ int main(void)
 
     while (1)
     {
-    	if(is_object_arrived() && !cam_busy)
+    	if((is_object_arrived() || HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) && !cam_busy)
 		{
+    		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+    		{
+    			HAL_Delay(200); // chống rung
+    		}
 			cam_busy = 1;
 			pData = lcd_ILI_get_draw_addr();
 			ov7670_startCap(OV7670_CAP_SINGLE_FRAME, (uint32_t)pData);
@@ -167,7 +163,7 @@ int main(void)
 			lcd_ILI_display_frame_Grey(buf, FRAME_WIDTH, FRAME_HEIGHT);
 
 
-//			FPGA_Send_Image(fpga_buf, FRAME_WIDTH, FRAME_HEIGHT);
+			FPGA_Send_Image(buf, FRAME_WIDTH, FRAME_HEIGHT);
 
 			frame_captured = 0;
 			cam_busy = 0;
@@ -288,6 +284,44 @@ static void MX_I2C2_Init(void)
   /* USER CODE BEGIN I2C2_Init 2 */
 
   /* USER CODE END I2C2_Init 2 */
+
+}
+
+/**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI2_Init(void)
+{
+
+  /* USER CODE BEGIN SPI2_Init 0 */
+
+  /* USER CODE END SPI2_Init 0 */
+
+  /* USER CODE BEGIN SPI2_Init 1 */
+
+  /* USER CODE END SPI2_Init 1 */
+  /* SPI2 parameter configuration*/
+  hspi2.Instance = SPI2;
+  hspi2.Init.Mode = SPI_MODE_MASTER;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi2.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI2_Init 2 */
+
+  /* USER CODE END SPI2_Init 2 */
 
 }
 
@@ -457,14 +491,14 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, FSMC_BLK_Pin|FSMC_RES_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FSMC_BLK_Pin|FSMC_RES_Pin|FPGA_SS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(CAMERA_RESET_GPIO_Port, CAMERA_RESET_Pin, GPIO_PIN_RESET);
@@ -475,8 +509,14 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(HEART_GPIO_Port, HEART_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : FSMC_BLK_Pin FSMC_RES_Pin */
-  GPIO_InitStruct.Pin = FSMC_BLK_Pin|FSMC_RES_Pin;
+  /*Configure GPIO pin : BTN_TRIGGER_Pin */
+  GPIO_InitStruct.Pin = BTN_TRIGGER_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(BTN_TRIGGER_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : FSMC_BLK_Pin FSMC_RES_Pin FPGA_SS_Pin */
+  GPIO_InitStruct.Pin = FSMC_BLK_Pin|FSMC_RES_Pin|FPGA_SS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

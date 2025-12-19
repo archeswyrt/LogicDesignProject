@@ -1,0 +1,457 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Thu Dec 18 22:22:19 2025
+# Process ID: 13008
+# Current directory: D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.runs/synth_1
+# Command line: vivado.exe -log SystemProject.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source SystemProject.tcl
+# Log file: D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.runs/synth_1/SystemProject.vds
+# Journal file: D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source SystemProject.tcl -notrace
+Command: synth_design -top SystemProject -part xc7z010iclg225-1L
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010i'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010i'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 7668 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 337.832 ; gain = 100.223
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'SystemProject' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:23]
+INFO: [Synth 8-6157] synthesizing module 'spi_slave' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/imports/new/spi_slave.v:23]
+WARNING: [Synth 8-3936] Found unconnected internal register 'mosi_r_reg' and it is trimmed from '3' to '2' bits. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/imports/new/spi_slave.v:40]
+WARNING: [Synth 8-3936] Found unconnected internal register 'cs_n_r_reg' and it is trimmed from '3' to '2' bits. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/imports/new/spi_slave.v:39]
+INFO: [Synth 8-6155] done synthesizing module 'spi_slave' (1#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/imports/new/spi_slave.v:23]
+INFO: [Synth 8-6157] synthesizing module 'background_subtraction' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:150]
+INFO: [Synth 8-6155] done synthesizing module 'background_subtraction' (2#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:150]
+INFO: [Synth 8-6157] synthesizing module 'image_processing_core' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:198]
+INFO: [Synth 8-6155] done synthesizing module 'image_processing_core' (3#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:198]
+INFO: [Synth 8-6157] synthesizing module 'classifier' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:237]
+INFO: [Synth 8-6155] done synthesizing module 'classifier' (4#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:237]
+INFO: [Synth 8-6157] synthesizing module 'servo_controller' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:264]
+	Parameter D2 bound to: 200000000 - type: integer 
+	Parameter D4 bound to: 400000000 - type: integer 
+	Parameter D6 bound to: 600000000 - type: integer 
+INFO: [Synth 8-155] case statement is not full and has no default [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:298]
+INFO: [Synth 8-6155] done synthesizing module 'servo_controller' (5#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:264]
+INFO: [Synth 8-6157] synthesizing module 'servo_cycle' [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:310]
+	Parameter PWM_PERIOD bound to: 2000000 - type: integer 
+	Parameter PULSE_0 bound to: 20000 - type: integer 
+	Parameter PULSE_180 bound to: 150000 - type: integer 
+	Parameter THREE_SEC bound to: 75000000 - type: integer 
+	Parameter CYCLES_3S bound to: 37 - type: integer 
+	Parameter ST_IDLE bound to: 2'b00 
+	Parameter ST_GO_180 bound to: 2'b01 
+	Parameter ST_GO_0 bound to: 2'b10 
+INFO: [Synth 8-155] case statement is not full and has no default [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:350]
+INFO: [Synth 8-6155] done synthesizing module 'servo_cycle' (6#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:310]
+INFO: [Synth 8-6155] done synthesizing module 'SystemProject' (7#1) [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:23]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 393.793 ; gain = 156.184
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 393.793 ; gain = 156.184
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 393.793 ; gain = 156.184
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z010iclg225-1L
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]
+Finished Parsing XDC File [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/SystemProject_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/SystemProject_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 732.336 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 732.336 ; gain = 494.727
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z010iclg225-1L
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 732.336 ; gain = 494.727
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 732.336 ; gain = 494.727
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3936] Found unconnected internal register 'shift_reg_reg' and it is trimmed from '8' to '7' bits. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/imports/new/spi_slave.v:54]
+INFO: [Synth 8-5544] ROM "data_valid" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:182]
+INFO: [Synth 8-5545] ROM "frame_done" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "start0" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "start1" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "start2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'servo_cycle'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 ST_IDLE |                              001 |                               00
+               ST_GO_180 |                              010 |                               01
+                 ST_GO_0 |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'servo_cycle'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 732.336 ; gain = 494.727
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     33 Bit       Adders := 1     
+	   2 Input     32 Bit       Adders := 8     
+	   2 Input     28 Bit       Adders := 3     
+	   3 Input      8 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 9     
+	                8 Bit    Registers := 2     
+	                7 Bit    Registers := 1     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 4     
+	                1 Bit    Registers := 11    
++---Multipliers : 
+	                17x32  Multipliers := 3     
++---RAMs : 
+	             150K Bit         RAMs := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 6     
+	   3 Input     32 Bit        Muxes := 6     
+	   2 Input      8 Bit        Muxes := 2     
+	   3 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 14    
+	   4 Input      1 Bit        Muxes := 2     
+	   5 Input      1 Bit        Muxes := 3     
+	   3 Input      1 Bit        Muxes := 9     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module spi_slave 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 1     
+	                7 Bit    Registers := 1     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 1     
+Module background_subtraction 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input      8 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---RAMs : 
+	             150K Bit         RAMs := 1     
++---Muxes : 
+	   2 Input      8 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 1     
+Module image_processing_core 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 3     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 1     
+Module classifier 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     33 Bit       Adders := 1     
+	   2 Input     32 Bit       Adders := 2     
++---Registers : 
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   3 Input      2 Bit        Muxes := 1     
+Module servo_controller 
+Detailed RTL Component Info : 
++---Registers : 
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 4     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 8     
+	   4 Input      1 Bit        Muxes := 2     
+	   5 Input      1 Bit        Muxes := 3     
+Module servo_cycle 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 2     
+	   2 Input     28 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 2     
+	                1 Bit    Registers := 1     
++---Multipliers : 
+	                17x32  Multipliers := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+	   3 Input     32 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 1     
+	   3 Input      1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 80 (col length:40)
+BRAMs: 120 (col length: RAMB18 40 RAMB36 20)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-5545] ROM "frame_done" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "busy" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-6014] Unused sequential element u_moment/M11_reg was removed.  [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/sources_1/new/SystemProject.v:213]
+INFO: [Synth 8-3886] merging instance 'servo_cycle:/pulse_width_reg[28]' (FDE) to 'servo_cycle:/pulse_width_reg[29]'
+INFO: [Synth 8-3886] merging instance 'servo_cycle:/pulse_width_reg[29]' (FDE) to 'servo_cycle:/pulse_width_reg[30]'
+INFO: [Synth 8-3886] merging instance 'servo_cycle:/pulse_width_reg[30]' (FDE) to 'servo_cycle:/pulse_width_reg[31]'
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 732.336 ; gain = 494.727
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Preliminary Mapping  Report (see note below)
++------------+------------+-----------+----------------------+-------------------+
+|Module Name | RTL Object | Inference | Size (Depth x Width) | Primitives        | 
++------------+------------+-----------+----------------------+-------------------+
+|u_bg        | bg_mem_reg | Implied   | 32 K x 8             | RAM256X1S x 600   | 
++------------+------------+-----------+----------------------+-------------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 732.734 ; gain = 495.125
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 765.691 ; gain = 528.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Final Mapping  Report
++------------+------------+-----------+----------------------+-------------------+
+|Module Name | RTL Object | Inference | Size (Depth x Width) | Primitives        | 
++------------+------------+-----------+----------------------+-------------------+
+|u_bg        | bg_mem_reg | Implied   | 32 K x 8             | RAM256X1S x 600   | 
++------------+------------+-----------+----------------------+-------------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+----------+------+
+|      |Cell      |Count |
++------+----------+------+
+|1     |BUFG      |     1|
+|2     |CARRY4    |   582|
+|3     |LUT1      |   117|
+|4     |LUT2      |   726|
+|5     |LUT3      |   619|
+|6     |LUT4      |   578|
+|7     |LUT5      |   501|
+|8     |LUT6      |   870|
+|9     |MUXF7     |    80|
+|10    |MUXF8     |    32|
+|11    |RAM256X1S |   600|
+|12    |FDRE      |   547|
+|13    |IBUF      |     5|
+|14    |OBUF      |     7|
++------+----------+------+
+
+Report Instance Areas: 
++------+---------------+-----------------------+------+
+|      |Instance       |Module                 |Cells |
++------+---------------+-----------------------+------+
+|1     |top            |                       |  5265|
+|2     |  u_bg         |background_subtraction |  1333|
+|3     |  u_cls        |classifier             |     6|
+|4     |  u_moment     |image_processing_core  |   365|
+|5     |  u_servo0     |servo_cycle            |  1136|
+|6     |  u_servo1     |servo_cycle_0          |  1136|
+|7     |  u_servo2     |servo_cycle_1          |  1136|
+|8     |  u_servo_ctrl |servo_controller       |    71|
+|9     |  u_spi        |spi_slave              |    68|
++------+---------------+-----------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 807.152 ; gain = 569.543
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 807.152 ; gain = 231.000
+Synthesis Optimization Complete : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 807.152 ; gain = 569.543
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 1299 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 600 instances were transformed.
+  RAM256X1S => RAM256X1S (MUXF7, MUXF7, MUXF8, RAMS64E, RAMS64E, RAMS64E, RAMS64E): 600 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+52 Infos, 4 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 807.152 ; gain = 582.586
+WARNING: [Constraints 18-5210] No constraint will be written out.
+INFO: [Common 17-1381] The checkpoint 'D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.runs/synth_1/SystemProject.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file SystemProject_utilization_synth.rpt -pb SystemProject_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.048 . Memory (MB): peak = 807.152 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Thu Dec 18 22:22:48 2025...

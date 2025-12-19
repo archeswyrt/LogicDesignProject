@@ -1,0 +1,200 @@
+
+*** Running vivado
+    with args -log SystemProject.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source SystemProject.tcl -notrace
+
+
+****** Vivado v2018.2 (64-bit)
+  **** SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+  **** IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source SystemProject.tcl -notrace
+Command: link_design -top SystemProject -part xc7z010iclg225-1L
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Netlist 29-17] Analyzing 1299 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.2
+INFO: [Device 21-403] Loading part xc7z010iclg225-1L
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]
+CRITICAL WARNING: [Common 17-69] Command failed: 'H16' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:7]
+CRITICAL WARNING: [Common 17-69] Command failed: 'R14' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:23]
+CRITICAL WARNING: [Common 17-69] Command failed: 'N16' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:25]
+CRITICAL WARNING: [Common 17-69] Command failed: 'D19' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:29]
+CRITICAL WARNING: [Common 17-69] Command failed: 'Y18' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:35]
+CRITICAL WARNING: [Common 17-69] Command failed: 'Y19' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:36]
+CRITICAL WARNING: [Common 17-69] Command failed: 'Y16' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:37]
+CRITICAL WARNING: [Common 17-69] Command failed: 'T12' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:170]
+CRITICAL WARNING: [Common 17-69] Command failed: 'H15' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:171]
+CRITICAL WARNING: [Common 17-69] Command failed: 'F16' is not a valid site or package pin name. [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc:172]
+Finished Parsing XDC File [D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 600 instances were transformed.
+  RAM256X1S => RAM256X1S (MUXF7, MUXF7, MUXF8, RAMS64E, RAMS64E, RAMS64E, RAMS64E): 600 instances
+
+7 Infos, 0 Warnings, 10 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+link_design: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 568.957 ; gain = 338.887
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z010i'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010i'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.402 . Memory (MB): peak = 574.938 ; gain = 5.980
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 119351ecb
+
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 1129.738 ; gain = 554.539
+
+Starting Logic Optimization Task
+
+Phase 1 Retarget
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 15e6f5270
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.355 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+
+Phase 2 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 2 Constant propagation | Checksum: b4005ccc
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.440 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 3 Sweep
+Phase 3 Sweep | Checksum: c38c8ebe
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.531 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Opt 31-389] Phase Sweep created 1 cells and removed 0 cells
+
+Phase 4 BUFG optimization
+Phase 4 BUFG optimization | Checksum: c38c8ebe
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.780 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 5 Shift Register Optimization
+Phase 5 Shift Register Optimization | Checksum: b5b3c380
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.962 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 6 Post Processing Netlist
+Phase 6 Post Processing Netlist | Checksum: b5b3c380
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.984 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1129.738 ; gain = 0.000
+Ending Logic Optimization Task | Checksum: b5b3c380
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1129.738 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: b5b3c380
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1129.738 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: b5b3c380
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+23 Infos, 0 Warnings, 10 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1129.738 ; gain = 560.781
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.034 . Memory (MB): peak = 1129.738 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.runs/impl_1/SystemProject_opt.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_drc -file SystemProject_drc_opted.rpt -pb SystemProject_drc_opted.pb -rpx SystemProject_drc_opted.rpx
+Command: report_drc -file SystemProject_drc_opted.rpt -pb SystemProject_drc_opted.pb -rpx SystemProject_drc_opted.rpx
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Coretcl 2-168] The results of DRC are in file D:/HK251/LogicDesignProject/VivadoProject/ProjectAssignment/ProjectAssignment.runs/impl_1/SystemProject_drc_opted.rpt.
+report_drc completed successfully
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z010i'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010i'
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+Starting Placer Task
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1129.738 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 72ad45e2
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1129.738 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1129.738 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+ERROR: [Place 30-58] IO placement is infeasible. Number of unplaced terminals (9) is greater than number of available sites (8).
+The following are banks with available pins: 
+ERROR: [Place 30-374] IO placer failed to find a solution
+Below is the partial placement that can be analyzed to see if any constraint modifications will make the IO placement problem easier to solve.
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                     IO Placement : Bank Stats                                                                           |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+| Id | Pins  | Terms |                               Standards                                |                IDelayCtrls               |  VREF  |  VCCO  |   VR   | DCI |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+|  0 |     0 |     0 |                                                                        |                                          |        |        |        |     |
+| 34 |    46 |     2 | LVCMOS33(2)                                                            |                                          |        |  +3.30 |    YES |     |
+| 35 |     8 |     0 |                                                                        |                                          |        |        |        |     |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+|    |    54 |     2 |                                                                        |                                          |        |        |        |     |
++----+-------+-------+------------------------------------------------------------------------+------------------------------------------+--------+--------+--------+-----+
+
+IO Placement:
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+| BankId |             Terminal | Standard        | Site                 | Pin                  | Attributes           |
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+| 34     | led1                 | LVCMOS33        | IOB_X0Y13            | P14                  |                      |
+|        | led3                 | LVCMOS33        | IOB_X0Y31            | M14                  |                      |
++--------+----------------------+-----------------+----------------------+----------------------+----------------------+
+
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 1648e89e5
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.801 . Memory (MB): peak = 1140.941 ; gain = 11.203
+Phase 1 Placer Initialization | Checksum: 1648e89e5
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.802 . Memory (MB): peak = 1140.941 ; gain = 11.203
+ERROR: [Place 30-99] Placer failed with error: 'IO Clock Placer failed'
+Please review all ERROR, CRITICAL WARNING, and WARNING messages during placement to understand the cause for failure.
+Ending Placer Task | Checksum: 1648e89e5
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.803 . Memory (MB): peak = 1140.941 ; gain = 11.203
+INFO: [Common 17-83] Releasing license: Implementation
+41 Infos, 0 Warnings, 10 Critical Warnings and 4 Errors encountered.
+place_design failed
+ERROR: [Common 17-69] Command failed: Placer could not place all instances
+INFO: [Common 17-206] Exiting Vivado at Thu Dec 18 22:23:18 2025...
